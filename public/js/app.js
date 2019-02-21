@@ -1824,6 +1824,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Passers",
   data: function data() {
@@ -1876,7 +1877,6 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'api/passers/search?page=1';
       this.is_search = true;
-      console.log(page);
       fetch(page + '&q=' + this.query).then(function (res) {
         return res.json();
       }).then(function (res) {
@@ -1946,24 +1946,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "School",
   data: function data() {
     return {
-      schools: []
+      schools: [],
+      pagination: {}
     };
   },
   methods: {
     getPassersPerSchool: function getPassersPerSchool() {
       var _this = this;
 
-      fetch('http://webappetiserpshs.test/api/passers/school').then(function (res) {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'http://webappetiserpshs.test/api/passers/school';
+      fetch(page).then(function (res) {
         return res.json();
-      }).then(function (data) {
-        _this.schools = data;
+      }).then(function (res) {
+        _this.schools = res.data;
+
+        _this.setPaginate(res);
       }).catch(function (err) {
         console.log(err);
       });
+    },
+    setPaginate: function setPaginate(res) {
+      var pagination = {
+        current_page: res.current_page,
+        first_page: res.first_page_url,
+        last_page: res.last_page_url,
+        next_page: res.next_page_url,
+        prev_page: res.prev_page_url,
+        total_pages: res.last_page,
+        per_page: res.per_page
+      };
+      this.pagination = pagination;
     }
   },
   created: function created() {
@@ -38073,6 +38099,113 @@ var render = function() {
         }),
         0
       )
+    ]),
+    _vm._v(" "),
+    _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+      _c("ul", { staticClass: "pagination" }, [
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: [{ disabled: !_vm.pagination.first_page }]
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.getPassersPerSchool(_vm.pagination.first_page)
+                  }
+                }
+              },
+              [_vm._v("First Page")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: [{ disabled: !_vm.pagination.prev_page }]
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.getPassersPerSchool(_vm.pagination.prev_page)
+                  }
+                }
+              },
+              [_vm._v("Previous")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("li", { staticClass: "page-item disabled" }, [
+          _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+            _vm._v(
+              "Page " +
+                _vm._s(_vm.pagination.current_page) +
+                " of " +
+                _vm._s(_vm.pagination.total_pages)
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: [{ disabled: !_vm.pagination.next_page }]
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.getPassersPerSchool(_vm.pagination.next_page)
+                  }
+                }
+              },
+              [_vm._v("Next")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          {
+            staticClass: "page-item",
+            class: [{ disabled: !_vm.pagination.last_page }]
+          },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "page-link",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.getPassersPerSchool(_vm.pagination.last_page)
+                  }
+                }
+              },
+              [_vm._v("Last Page")]
+            )
+          ]
+        )
+      ])
     ])
   ])
 }

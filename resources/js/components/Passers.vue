@@ -47,6 +47,7 @@
             </tr>
             </tbody>
         </table>
+        <!--Pagination-->
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item" v-bind:class="[{disabled: !pagination.first_page}]"><a class="page-link" href="#" @click="is_search ? searchPassers(pagination.first_page) : getPassers(pagination.first_page)">First Page</a></li>
@@ -107,7 +108,6 @@
             },
             searchPassers(page = 'api/passers/search?page=1') {
                 this.is_search = true;
-                console.log(page);
                 fetch(page + '&q=' + this.query)
                     .then(res => res.json())
                     .then(res => {

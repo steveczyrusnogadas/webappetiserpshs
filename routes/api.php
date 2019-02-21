@@ -16,10 +16,10 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('passers', 'PassersController@index');
-Route::get('passer/{id}', 'PassersController@show');
-Route::get('passers/search', 'PassersController@search');
-Route::get('passers/school', 'PassersController@school');
-Route::post('passers', 'PassersController@store');
-Route::put('passers/{passer}', 'PassersController@update');
-Route::delete('passers/{passer}', 'PassersController@delete');
+Route::get('passers', 'ExamineesController@index');
+Route::get('passer/{id}', 'ExamineesController@show');
+Route::get('passers/search', 'ExamineesController@search');
+Route::get('passers/school', 'ExamineesController@school');
+Route::post('passers', 'ExamineesController@store');
+Route::put('passers/{passer}', 'ExamineesController@update');
+Route::delete('passers/{passer}', 'ExamineesController@delete');

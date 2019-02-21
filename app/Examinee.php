@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Passer extends Model
+class Examinee extends Model
 {
     protected $fillable = [
         'name_of_examinee',
